@@ -1,4 +1,5 @@
 import 'package:ceritaku/shared/theme.dart';
+import 'package:ceritaku/ui/pages/register_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,6 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
 
       theme: ThemeData(
           scaffoldBackgroundColor: lightBackgroundColor,
@@ -32,7 +34,7 @@ class MyApp extends StatelessWidget {
           )
       ),
 
-      home: Placeholder(),
+      home: const RegisterPage(),
     );
   }
 }

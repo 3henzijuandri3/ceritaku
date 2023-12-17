@@ -1,0 +1,58 @@
+import 'package:flutter/material.dart';
+
+import '../../shared/theme.dart';
+
+class FilledButtonCustom extends StatelessWidget {
+  final double width;
+  final double height;
+  final String label;
+  final Function onTap;
+  
+  const FilledButtonCustom({
+    super.key, 
+    required this.width, 
+    required this.height, 
+    required this.label, 
+    required this.onTap
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: width,
+      height: height,
+
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+
+          boxShadow: [
+            BoxShadow(
+              color: greenColor.withOpacity(0.5), // Adjust the opacity as needed
+              spreadRadius: 2,
+              blurRadius: 5,
+              offset: Offset(0, 3)
+            ),
+          ],
+        ),
+
+        child: TextButton(
+          onPressed: () => onTap(),
+          style: TextButton.styleFrom(
+            backgroundColor: greenColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+          ),
+          child: Text(
+            label,
+            style: blackTextStyle.copyWith(
+              fontSize: 16,
+              fontWeight: semiBold,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

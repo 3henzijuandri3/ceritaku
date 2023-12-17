@@ -8,9 +8,9 @@ Color lightGreyColor = const Color(0xffF1F1F9);
 Color yellowColor = const Color(0xFFFFC700);
 Color blueColor = const Color(0xff53C1F9);
 Color redColor = const Color(0xffFF2566);
-Color greenColor = const Color(0xFF23B16D);
+Color greenColor = const Color(0xFFA8D83F);
 Color numberBackgroundColor = const Color(0xff1A1D2E);
-Color lightBackgroundColor = const Color(0xffF6F8FB);
+Color lightBackgroundColor = const Color(0xFFF6F6F6);
 Color darkBackgroundColor = const Color(0xff020518);
 
 TextStyle greenTextStyle = GoogleFonts.poppins(
