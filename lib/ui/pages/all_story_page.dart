@@ -1,9 +1,19 @@
+import 'dart:math';
+
 import 'package:ceritaku/shared/theme.dart';
+import 'package:ceritaku/shared/value.dart';
+import 'package:ceritaku/ui/widgets/button_custom.dart';
+import 'package:ceritaku/ui/widgets/card_custom.dart';
 import 'package:flutter/material.dart';
 
-class AllStoryPage extends StatelessWidget {
+class AllStoryPage extends StatefulWidget {
   const AllStoryPage({super.key});
 
+  @override
+  State<AllStoryPage> createState() => _AllStoryPageState();
+}
+
+class _AllStoryPageState extends State<AllStoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,104 +31,36 @@ class AllStoryPage extends StatelessWidget {
       ),
 
       body: ListView(
-        padding: const EdgeInsets.all(14),
+        padding: const EdgeInsets.all(12),
 
         children:  [
 
           // Story Card
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.all(12),
+          AllCeritaCardCustom(
+              userName: 'Henzi',
+              ceritaDescription: 'Bagus banget nih tempat. The best!!!',
+              ceritaImage: 'assets/cerita_placeholder.png',
+              ceritaDate: '20-12-2023',
+              ceritaPostTime: '10m',
+              userImage: profileImage[Random().nextInt(4)]
+          ),
 
-            decoration: BoxDecoration(
-              color: whiteColor,
-              borderRadius: BorderRadius.circular(20),
-            ),
+          AllCeritaCardCustom(
+              userName: 'Kevin',
+              ceritaDescription: 'Gandum segar hasil panen',
+              ceritaImage: 'assets/gandum.png',
+              ceritaDate: '20-12-2023',
+              ceritaPostTime: '50m',
+              userImage: profileImage[Random().nextInt(4)]
+          ),
 
-            child: Column(
-              children: [
-
-                // Top Section
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-
-                    // User Profile Image
-                    Container(
-                      width: 50,
-                      height: 50,
-
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                            image: AssetImage('assets/user_placeholder.png')
-                        ),
-                      ),
-                    ),
-
-                    const SizedBox(width: 12),
-
-                    // User Name
-                    Text(
-                      'Andy',
-                      style: blackTextStyle.copyWith(
-                        fontSize: 18,
-                        fontWeight: semiBold
-                      ),
-                    ),
-
-                    const Spacer(),
-
-                    Text(
-                      '20m ago',
-                      style: greyTextStyle.copyWith(
-                        fontSize: 14,
-                        fontWeight: medium
-                      ),
-                    ),
-
-                  ],
-                ),
-
-                const SizedBox(height: 14),
-
-                // Image Section
-                Container(
-                  width: double.infinity,
-                  height: 200,
-
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(14),
-                    image: DecorationImage(
-                      fit: BoxFit.fill,
-                      image: AssetImage('assets/cerita_placeholder.png'),
-                    ),
-                  ),
-                ),
-
-                const SizedBox(height: 8),
-
-                // Description Section
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 6),
-                  child: Text(
-                    'Pemandangan Lake Como di Italia pada malam hari, serasa seperti di surga. Bagus banget!!!',
-                    maxLines: 2,
-                    textAlign: TextAlign.justify,
-                    overflow: TextOverflow.ellipsis,
-                    style: blackTextStyle.copyWith(
-                      fontSize: 15,
-                      fontWeight: medium
-                    ),
-                  ),
-                ),
-
-                const SizedBox(height: 14),
-
-
-
-              ],
-            ),
+          AllCeritaCardCustom(
+              userName: 'Kevin',
+              ceritaDescription: 'Gandum segar hasil panen',
+              ceritaImage: 'assets/cerita_placeholder.png',
+              ceritaDate: '20-12-2023',
+              ceritaPostTime: '50m',
+              userImage: profileImage[Random().nextInt(4)]
           ),
 
         ],

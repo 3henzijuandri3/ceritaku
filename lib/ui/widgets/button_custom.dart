@@ -77,3 +77,37 @@ class TextButtonCustom extends StatelessWidget {
     );
   }
 }
+
+class SmallButtonCustom extends StatelessWidget {
+  final double paddingX;
+  final double paddingY;
+  final String label;
+  final Function onTap;
+
+  const SmallButtonCustom({
+    super.key,
+    required this.paddingX,
+    required this.paddingY,
+    required this.label,
+    required this.onTap
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: paddingX, vertical: paddingY),
+      decoration: BoxDecoration(
+        color: greyColor.withOpacity(0.7),
+        borderRadius: BorderRadius.circular(14),
+      ),
+
+      child: Text(
+        label,
+        style: blackTextStyle.copyWith(
+            fontSize: 14,
+            fontWeight: semiBold
+        ),
+      ),
+    );
+  }
+}
