@@ -38,6 +38,7 @@ dependencies:
   flutter_secure_storage: ^9.0.0
   colorful_safe_area: ^1.0.0
   another_flushbar: ^1.12.30
+  d_info: ^0.2.0
   flutter:
     sdk: flutter
 

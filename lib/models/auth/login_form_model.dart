@@ -1,20 +1,16 @@
-class RegisterFormModel {
-  final String? name;
+class LoginFormModel {
   final String? email;
   final String? password;
 
-  RegisterFormModel({
-    this.name,
+  LoginFormModel({
     this.email,
     this.password
   });
 
   Map<String, dynamic> toJson(){
     return {
-      'name' : name,
       'email' : email,
       'password' : password
-     };
+    };
   }
-
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../shared/theme.dart';
 
 class FilledButtonCustom extends StatelessWidget {
@@ -31,7 +30,7 @@ class FilledButtonCustom extends StatelessWidget {
               color: greenColor.withOpacity(0.5), // Adjust the opacity as needed
               spreadRadius: 2,
               blurRadius: 5,
-              offset: Offset(0, 3)
+              offset: const Offset(0, 3)
             ),
           ],
         ),
@@ -51,6 +50,28 @@ class FilledButtonCustom extends StatelessWidget {
               fontWeight: semiBold,
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class TextButtonCustom extends StatelessWidget {
+  final String label;
+  final Function onTap;
+
+  const TextButtonCustom({super.key, required this.label, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () => onTap(),
+
+      child: Text(
+        label,
+        style: greyTextStyle.copyWith(
+          fontSize: 16,
+          fontWeight: medium,
         ),
       ),
     );

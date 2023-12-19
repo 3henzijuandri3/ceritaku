@@ -1,61 +1,58 @@
-
-import 'package:ceritaku/controllers/auth_controller.dart';
-import 'package:ceritaku/models/auth/register_form_model.dart';
-import 'package:ceritaku/shared/theme.dart';
-import 'package:ceritaku/ui/pages/login_page.dart';
-import 'package:ceritaku/ui/widgets/button_custom.dart';
-import 'package:ceritaku/ui/widgets/input_form_custom.dart';
+import 'package:ceritaku/models/auth/login_form_model.dart';
+import 'package:ceritaku/ui/pages/register_page.dart';
 import 'package:d_info/d_info.dart';
 import 'package:flutter/material.dart';
+
+import '../../controllers/auth_controller.dart';
+import '../../shared/theme.dart';
+import '../widgets/button_custom.dart';
+import '../widgets/input_form_custom.dart';
 import 'package:get/get.dart';
 
-class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
-  final registerStateController = Get.put(AuthController());
+class _LoginPageState extends State<LoginPage> {
+  final loginStateController = Get.put(AuthController());
 
-  final nameController = TextEditingController(text: '');
   final emailController = TextEditingController(text: '');
   final passwordController = TextEditingController(text: '');
 
   bool validate(){
-    if(nameController.text.isEmpty || emailController.text.isEmpty || passwordController.text.isEmpty){
+    if(emailController.text.isEmpty || passwordController.text.isEmpty){
       return false;
     }
     return true;
   }
 
-  register() async {
+  login() async {
     if(validate()){
-      final registerSuccess = await registerStateController.registerUser(
-          RegisterFormModel(
-              name: nameController.text,
+      final loginSuccess = await loginStateController.loginUser(
+          LoginFormModel(
               email: emailController.text,
               password: passwordController.text
           )
       );
 
-      if(registerSuccess){
+      if(loginSuccess){
         if(!context.mounted) return;
-        DInfo.dialogSuccess(context, 'Akun berhasil dibuat');
-        DInfo.closeDialog(
-          context,
-          durationBeforeClose: const Duration(seconds: 1),
-          actionAfterClose: (){
-            registerStateController.clearState();
-            Get.offAll(const LoginPage());
-          }
-        );
+        DInfo.dialogSuccess(context, 'Login berhasil');
+        // DInfo.closeDialog(
+        //     context,
+        //     durationBeforeClose: const Duration(seconds: 1),
+        //     actionAfterClose: (){
+        //       Get.offAll(const LoginPage());
+        //     }
+        // );
 
       } else {
         if(!context.mounted) return;
-        final registerResponseMessage = registerStateController.registerResponse!.message.toString();
-        DInfo.dialogError(context, registerResponseMessage);
+        final loginResponseMessage = loginStateController.loginResponse!.message.toString();
+        DInfo.dialogError(context, loginResponseMessage);
       }
 
     } else {
@@ -67,7 +64,8 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Obx((){
-        final isLoading = registerStateController.isLoading.value;
+        final isLoading = loginStateController.isLoading.value;
+        final loginResponse = loginStateController.loginResponse;
 
         return Stack(
           children: [
@@ -91,7 +89,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                 // Register Text
                 Text(
-                  'Create\nNew Account',
+                  'Sign In\nTo Your Account',
                   style: blackTextStyle.copyWith(
                       fontSize: 18,
                       fontWeight: semiBold
@@ -99,15 +97,6 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
 
                 const SizedBox(height: 20),
-
-                // User Name
-                FilledInputCustom(
-                  hintText: 'Name',
-                  obscureText: false,
-                  controller: nameController,
-                ),
-
-                const SizedBox(height: 16),
 
                 // User Email
                 FilledInputCustom(
@@ -131,20 +120,24 @@ class _RegisterPageState extends State<RegisterPage> {
                 FilledButtonCustom(
                     width: double.infinity,
                     height: 50,
-                    label: 'Sign Up',
+                    label: 'Sign In',
                     onTap: () {
-                      register();
+                      login();
                     }
                 ),
 
                 const SizedBox(height: 30),
 
                 TextButtonCustom(
-                    label: 'Sign In to My Account',
+                    label: 'Create a New Account',
                     onTap: (){
-                      Get.to(() => const LoginPage());
+                      Get.to(() => const RegisterPage());
                     }
                 ),
+
+                const SizedBox(height: 30),
+
+                Text(loginResponse != null ? loginResponse.loginResult!.token.toString() : ''),
               ],
             ),
 
