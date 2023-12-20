@@ -26,7 +26,7 @@ class AllCeritaCardCustom extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.only(bottom: 20),
+      margin: const EdgeInsets.only(bottom: 20),
       padding: const EdgeInsets.all(12),
 
       decoration: BoxDecoration(
@@ -59,51 +59,62 @@ class AllCeritaCardCustom extends StatelessWidget {
               const SizedBox(width: 12),
 
               // Name & Story Description
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Name and Time
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      // User Name
-                      Text(
-                        userName,
-                        style: blackTextStyle.copyWith(
-                            fontSize: 18,
-                            fontWeight: semiBold
-                        ),
+              IntrinsicWidth(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+
+                    // Name and Time
+                    SizedBox(
+                      width: double.infinity,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+
+                          // User Name
+                          SizedBox(
+                            width: 180,
+                            child: Text(
+                              userName,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: blackTextStyle.copyWith(
+                                  fontSize: 18,
+                                  fontWeight: semiBold
+                              ),
+                            ),
+                          ),
+
+                          // Time
+                          Text(
+                            ceritaPostTime,
+                            style: greyTextStyle.copyWith(
+                                fontSize: 13,
+                                fontWeight: medium
+                            ),
+                          ),
+                        ],
                       ),
+                    ),
 
-                      const SizedBox(width: 8),
+                    const SizedBox(height: 3),
 
-                      // Time
-                      Text(
-                        '$ceritaPostTime ago',
-                        style: greyTextStyle.copyWith(
-                            fontSize: 13,
+                    // Description
+                    SizedBox(
+                      width: 270,
+                      child: Text(
+                        ceritaDescription,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: blackTextStyle.copyWith(
+                            fontSize: 14,
                             fontWeight: medium
                         ),
                       ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 3),
-
-                  // Description
-                  SizedBox(
-                    width: 270,
-                    child: Text(
-                      ceritaDescription,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: blackTextStyle.copyWith(
-                          fontSize: 14,
-                          fontWeight: medium
-                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               )
 
             ],
@@ -120,7 +131,7 @@ class AllCeritaCardCustom extends StatelessWidget {
               borderRadius: BorderRadius.circular(14),
               image: DecorationImage(
                 fit: BoxFit.fill,
-                image: AssetImage(ceritaImage),
+                image: NetworkImage(ceritaImage),
 
               ),
             ),
@@ -128,6 +139,7 @@ class AllCeritaCardCustom extends StatelessWidget {
 
           const SizedBox(height: 16),
 
+          // Bottom Section
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

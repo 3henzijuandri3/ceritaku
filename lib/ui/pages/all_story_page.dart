@@ -1,10 +1,14 @@
 import 'dart:math';
 
+import 'package:ceritaku/controllers/list_cerita_controller.dart';
 import 'package:ceritaku/shared/theme.dart';
 import 'package:ceritaku/shared/value.dart';
 import 'package:ceritaku/ui/widgets/button_custom.dart';
 import 'package:ceritaku/ui/widgets/card_custom.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../shared/methods.dart';
 
 class AllStoryPage extends StatefulWidget {
   const AllStoryPage({super.key});
@@ -14,6 +18,14 @@ class AllStoryPage extends StatefulWidget {
 }
 
 class _AllStoryPageState extends State<AllStoryPage> {
+  final listCeritaStateController = Get.put(ListCeritaController());
+
+  @override
+  void initState() {
+    super.initState();
+    listCeritaStateController.fetchListCerita();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,40 +42,37 @@ class _AllStoryPageState extends State<AllStoryPage> {
         ],
       ),
 
-      body: ListView(
-        padding: const EdgeInsets.all(12),
+      body: GetX(
+        init: listCeritaStateController,
+        builder: (controller){
+          final isLoading = controller.isLoading.value;
+          final listCeritaResponse = controller.listCeritaResponse;
 
-        children:  [
+          if(isLoading){
+            return Center(child: CircularProgressIndicator());
+          }
 
-          // Story Card
-          AllCeritaCardCustom(
-              userName: 'Henzi',
-              ceritaDescription: 'Bagus banget nih tempat. The best!!!',
-              ceritaImage: 'assets/cerita_placeholder.png',
-              ceritaDate: '20-12-2023',
-              ceritaPostTime: '10m',
-              userImage: profileImage[Random().nextInt(4)]
-          ),
+          if(listCeritaResponse != null){
+            final listCerita = listCeritaResponse.listCerita;
+            return ListView.builder(
+              padding: EdgeInsets.all(12),
+              itemCount: listCerita!.length,
 
-          AllCeritaCardCustom(
-              userName: 'Kevin',
-              ceritaDescription: 'Gandum segar hasil panen',
-              ceritaImage: 'assets/gandum.png',
-              ceritaDate: '20-12-2023',
-              ceritaPostTime: '50m',
-              userImage: profileImage[Random().nextInt(4)]
-          ),
+              itemBuilder: (context, index){
+                return AllCeritaCardCustom(
+                    userName: listCerita[index].name.toString(),
+                    ceritaDescription: listCerita[index].description.toString(),
+                    ceritaImage: listCerita[index].photoUrl.toString(),
+                    ceritaDate: '${formatDate(listCerita[index].createdAt.toString())}',
+                    ceritaPostTime: '${relativeTime(listCerita[index].createdAt.toString())}',
+                    userImage: profileImage[Random().nextInt(4)]
+                );
+              },
+            );
+          }
 
-          AllCeritaCardCustom(
-              userName: 'Kevin',
-              ceritaDescription: 'Gandum segar hasil panen',
-              ceritaImage: 'assets/cerita_placeholder.png',
-              ceritaDate: '20-12-2023',
-              ceritaPostTime: '50m',
-              userImage: profileImage[Random().nextInt(4)]
-          ),
-
-        ],
+          return Container();
+        },
       ),
     );
   }

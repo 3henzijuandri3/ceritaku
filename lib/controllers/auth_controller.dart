@@ -3,7 +3,6 @@ import 'package:ceritaku/models/auth/login_response_model.dart';
 import 'package:ceritaku/models/auth/register_form_model.dart';
 import 'package:ceritaku/models/auth/register_response_model.dart';
 import 'package:ceritaku/services/auth_service.dart';
-import 'package:ceritaku/ui/pages/login_page.dart';
 import 'package:get/get.dart';
 
 class AuthController extends GetxController{

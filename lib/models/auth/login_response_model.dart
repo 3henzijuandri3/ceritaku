@@ -1,7 +1,7 @@
 class LoginResponseModel {
-  bool? error;
-  String? message;
-  LoginResult? loginResult;
+  final bool? error;
+  final String? message;
+  final LoginResult? loginResult;
 
   LoginResponseModel({
     this.error,
