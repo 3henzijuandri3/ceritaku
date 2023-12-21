@@ -18,7 +18,7 @@ class AllCeritaCardCustom extends StatelessWidget {
     required this.ceritaImage,
     required this.ceritaDate,
     required this.ceritaPostTime,
-    required this.userImage
+    required this.userImage,
   });
 
   @override
@@ -132,7 +132,10 @@ class AllCeritaCardCustom extends StatelessWidget {
               image: DecorationImage(
                 fit: BoxFit.fill,
                 image: NetworkImage(ceritaImage),
-
+                  // colorFilter: ColorFilter.mode(
+                  //     Colors.black.withOpacity(0.35),
+                  //     BlendMode.multiply
+                  // )
               ),
             ),
           ),
@@ -173,12 +176,108 @@ class AllCeritaCardCustom extends StatelessWidget {
                   paddingX: 12,
                   paddingY: 6,
                   label: 'See more',
-                  onTap: (){}
               ),
             ],
           ),
         ],
       ),
+    );
+  }
+}
+
+class LatestCeritaCardCustom extends StatelessWidget {
+  final String description;
+  final String imageUrl;
+  final String userImage;
+  final String userName;
+
+  const LatestCeritaCardCustom({
+    super.key,
+    required this.description,
+    required this.imageUrl,
+    required this.userImage,
+    required this.userName
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.8,
+      height: 200,
+      margin: EdgeInsets.only(right: 20),
+
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        image: DecorationImage(
+          fit: BoxFit.cover,
+          image: NetworkImage(imageUrl),
+          colorFilter: ColorFilter.mode(
+              Colors.black.withOpacity(0.35),
+              BlendMode.multiply
+          )
+        ),
+      ),
+
+      // Story Information
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.start,
+
+          children: [
+            // Story Description
+            Text(
+              description,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
+              style: whiteTextStyle.copyWith(
+                  fontSize: 20,
+                  fontWeight: medium
+              ),
+            ),
+
+            const SizedBox(height: 14),
+
+            // User Information
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+
+                // User Image
+                Container(
+                  width: 35,
+                  height: 35,
+
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                        image: AssetImage(userImage)
+                    ),
+                  ),
+                ),
+
+                const SizedBox(width: 8),
+
+                // User Name
+                Container(
+                  width: 180,
+                  child: Text(
+                    userName,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: whiteTextStyle.copyWith(
+                      fontSize: 14,
+                      fontWeight: medium
+                    ),
+                  ),
+                ),
+
+              ],
+            )
+          ],
+        ),
+      )
     );
   }
 }

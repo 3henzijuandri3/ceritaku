@@ -82,14 +82,14 @@ class SmallButtonCustom extends StatelessWidget {
   final double paddingX;
   final double paddingY;
   final String label;
-  final Function onTap;
+  final double? customFontSize;
 
   const SmallButtonCustom({
     super.key,
     required this.paddingX,
     required this.paddingY,
     required this.label,
-    required this.onTap
+    this.customFontSize,
   });
 
   @override
@@ -97,16 +97,95 @@ class SmallButtonCustom extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: paddingX, vertical: paddingY),
       decoration: BoxDecoration(
-        color: greyColor.withOpacity(0.7),
+        color: greenColor.withOpacity(0.95),
         borderRadius: BorderRadius.circular(14),
       ),
 
       child: Text(
         label,
         style: blackTextStyle.copyWith(
-            fontSize: 14,
+            fontSize: customFontSize == null ? 14 : customFontSize,
             fontWeight: semiBold
         ),
+      ),
+    );
+  }
+}
+
+class CategoryButtonCustom extends StatelessWidget {
+  final String label;
+  final bool isSelected;
+
+  const CategoryButtonCustom({super.key, required this.label, required this.isSelected});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 80,
+      height: 40,
+
+      decoration: BoxDecoration(
+          color: isSelected ? greenColor : whiteColor,
+          borderRadius: BorderRadius.circular(20)
+      ),
+
+      child: Center(
+        child: Text(
+          label,
+          style: blackTextStyle.copyWith(
+              fontSize: 14,
+              fontWeight: isSelected ? semiBold : medium
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class MenuButtonCutom extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final Function onTap;
+
+
+  const MenuButtonCutom({super.key, required this.icon, required this.label, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => onTap(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          // Icon
+          Container(
+            width: 70,
+            height: 70,
+
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: whiteColor,
+            ),
+
+            child: Center(
+              child: Icon(
+                icon,
+                size: 30,
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 8),
+
+          // Text
+          Text(
+            label,
+            style: blackTextStyle.copyWith(
+                fontSize: 13,
+                fontWeight: medium
+            ),
+          )
+        ],
       ),
     );
   }

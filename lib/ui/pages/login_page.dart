@@ -1,4 +1,6 @@
 import 'package:ceritaku/models/auth/login_form_model.dart';
+import 'package:ceritaku/ui/pages/all_story_page.dart';
+import 'package:ceritaku/ui/pages/home_page.dart';
 import 'package:ceritaku/ui/pages/register_page.dart';
 import 'package:d_info/d_info.dart';
 import 'package:flutter/material.dart';
@@ -41,13 +43,13 @@ class _LoginPageState extends State<LoginPage> {
       if(loginSuccess){
         if(!context.mounted) return;
         DInfo.dialogSuccess(context, 'Login berhasil');
-        // DInfo.closeDialog(
-        //     context,
-        //     durationBeforeClose: const Duration(seconds: 1),
-        //     actionAfterClose: (){
-        //       Get.offAll(const LoginPage());
-        //     }
-        // );
+        DInfo.closeDialog(
+            context,
+            durationBeforeClose: const Duration(seconds: 1),
+            actionAfterClose: (){
+              Get.offAll(const HomePage());
+            }
+        );
 
       } else {
         if(!context.mounted) return;
@@ -81,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                     decoration: const BoxDecoration(
                       image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: AssetImage('assets/ceritaku_logo.png'),
+                        image: AssetImage('assets/ceritaku_logo_auth.png'),
                       ),
                     ),
                   ),
@@ -134,10 +136,6 @@ class _LoginPageState extends State<LoginPage> {
                       Get.to(() => const RegisterPage());
                     }
                 ),
-
-                const SizedBox(height: 30),
-
-                Text(loginResponse != null ? loginResponse.loginResult!.token.toString() : ''),
               ],
             ),
 

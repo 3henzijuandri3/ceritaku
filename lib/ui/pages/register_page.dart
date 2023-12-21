@@ -48,6 +48,7 @@ class _RegisterPageState extends State<RegisterPage> {
           durationBeforeClose: const Duration(seconds: 1),
           actionAfterClose: (){
             registerStateController.clearState();
+            registerStateController.clearState();
             Get.offAll(const LoginPage());
           }
         );
@@ -83,7 +84,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     decoration: const BoxDecoration(
                       image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: AssetImage('assets/ceritaku_logo.png'),
+                        image: AssetImage('assets/ceritaku_logo_auth.png'),
                       ),
                     ),
                   ),

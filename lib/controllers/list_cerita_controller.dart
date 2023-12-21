@@ -1,4 +1,5 @@
-import 'package:ceritaku/models/auth/list_cerita_model.dart';
+import 'package:ceritaku/models/cerita/list_cerita_model.dart';
+import 'package:ceritaku/services/auth_service.dart';
 import 'package:ceritaku/services/cerita_service.dart';
 import 'package:get/get.dart';
 
@@ -8,12 +9,14 @@ class ListCeritaController extends GetxController{
   final _listCeritaResponse = Rxn<ListCeritaModel?>();
   ListCeritaModel? get listCeritaResponse => _listCeritaResponse.value;
 
+  final _userName = Rxn<String?>();
+  String? get userName => _userName.value;
+
   Future<void> fetchListCerita() async {
     isLoading(true);
-    String authToken = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyLVRXZy1BWElJemdNd0pFWk4iLCJpYXQiOjE3MDI5NzcyNjd9.QK9CipKCa3xUyIYo2Be-hTHpEca52ci4MH6tCgU1Hns';
 
     try{
-      var getListCerita = await CeritaService().getListCerita(authToken);
+      var getListCerita = await CeritaService().getListCerita();
       _listCeritaResponse.value = getListCerita;
 
     } catch(e) {
@@ -23,6 +26,29 @@ class ListCeritaController extends GetxController{
     } finally {
       isLoading(false);
     }
+  }
+
+  Future<void> fetchCeritaHome() async {
+    isLoading(true);
+
+    try{
+      var getListCerita = await CeritaService().getListCerita();
+      _listCeritaResponse.value = getListCerita;
+
+      var getUserName = await AuthService().getUserName();
+      _userName.value = getUserName;
+
+    } catch(e) {
+      isLoading(false);
+      rethrow;
+
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  clearState(){
+    Get.delete<ListCeritaController>(force: true);
   }
 
 }
