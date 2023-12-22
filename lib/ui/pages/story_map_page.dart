@@ -1,35 +1,78 @@
 import 'dart:async';
+import 'dart:developer';
 
+import 'package:ceritaku/controllers/list_cerita_controller.dart';
+import 'package:ceritaku/models/cerita/cerita_detail_model.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class StoryMapPage extends StatefulWidget {
   const StoryMapPage({super.key});
 
   @override
-  State<StoryMapPage> createState() => MapSampleState();
+  State<StoryMapPage> createState() => _StoryMapPageState();
 }
 
-class MapSampleState extends State<StoryMapPage> {
+class _StoryMapPageState extends State<StoryMapPage> {
+  final ceritaMapStateController = Get.put(ListCeritaController());
+
   final Completer<GoogleMapController> _controller =
   Completer<GoogleMapController>();
 
-  static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
+  static const CameraPosition bandung = CameraPosition(
+    target: LatLng(-6.901921404090456, 107.61804778753373),
+    zoom: 6,
   );
+
+  @override
+  void initState() {
+    super.initState();
+    ceritaMapStateController.fetchListCeritaLocation();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GoogleMap(
-        mapType: MapType.normal,
-        initialCameraPosition: _kGooglePlex,
-        onMapCreated: (GoogleMapController controller) {
-          _controller.complete(controller);
-        },
-      ),
+      body: GetX(
+          init: ceritaMapStateController,
+          builder: (controller){
+            final isLoading = controller.isLoading.value;
+            final listCeritaLocationResponse = controller.listCeritaLocationResponse;
+
+            if(isLoading){
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            if(listCeritaLocationResponse != null){
+              final listCeritaLocation = listCeritaLocationResponse.listCerita;
+
+              return GoogleMap(
+                mapType: MapType.normal,
+                initialCameraPosition: bandung,
+
+                markers: listCeritaLocation!.map((cerita) =>
+                    Marker(
+                        markerId: MarkerId(cerita.id.toString()),
+                        position: LatLng(cerita.lat!.toDouble(), cerita.lon!.toDouble()),
+                        infoWindow: InfoWindow(
+                          title: cerita.name.toString(),
+                          snippet: cerita.description
+                        ),
+                    )).toSet(),
+
+                onMapCreated: (GoogleMapController controller) {
+                  _controller.complete(controller);
+                },
+
+              );
+            }
+
+            return const Center(child: Text('Something Went Wrong :('));
+
+          }),
     );
   }
-
 }
+
+

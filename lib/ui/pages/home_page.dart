@@ -7,6 +7,7 @@ import 'package:ceritaku/shared/theme.dart';
 import 'package:ceritaku/shared/value.dart';
 import 'package:ceritaku/ui/pages/all_story_page.dart';
 import 'package:ceritaku/ui/pages/onboarding_page.dart';
+import 'package:ceritaku/ui/pages/story_detail_page.dart';
 import 'package:ceritaku/ui/pages/story_map_page.dart';
 import 'package:ceritaku/ui/widgets/button_custom.dart';
 import 'package:ceritaku/ui/widgets/card_custom.dart';
@@ -164,6 +165,7 @@ class _HomePageState extends State<HomePage> {
 
               GestureDetector(
                 onTap: (){
+                  homeStateController.clearState();
                   Get.to(() => const StoryMapPage());
                 },
                 child: SmallButtonCustom(paddingX: 16, paddingY: 10, label: 'Open Map'),
@@ -213,6 +215,7 @@ class _HomePageState extends State<HomePage> {
                 icon: Icons.map,
                 label: 'Story Map',
                 onTap: (){
+                  homeStateController.clearState();
                   Get.to(() => const StoryMapPage());
                 }
             ),
@@ -240,11 +243,16 @@ class _HomePageState extends State<HomePage> {
           scrollDirection: Axis.horizontal,
           child: Row(
             children: listCerita.map((cerita) =>
-                LatestCeritaCardCustom(
-                    description: cerita.description.toString(),
-                    imageUrl: cerita.photoUrl.toString(),
-                    userImage: profileImage[Random().nextInt(4)],
-                    userName: cerita.name.toString()
+                GestureDetector(
+                  onTap: (){
+                    Get.to(() => StoryDetailPage(storyId: cerita.id.toString()));
+                  },
+                  child: LatestCeritaCardCustom(
+                      description: cerita.description.toString(),
+                      imageUrl: cerita.photoUrl.toString(),
+                      userImage: profileImage[Random().nextInt(4)],
+                      userName: cerita.name.toString()
+                  ),
                 )
             ).take(5).toList(),
           ),

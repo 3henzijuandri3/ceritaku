@@ -167,7 +167,7 @@ class _StoryDetailPageState extends State<StoryDetailPage> {
                           ],
                         ),
 
-                        const SizedBox(height: 14),
+                        const SizedBox(height: 8),
 
                         // Cerita Description
                         Text(
@@ -176,6 +176,58 @@ class _StoryDetailPageState extends State<StoryDetailPage> {
                           style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.normal,
+                          ),
+                        ),
+
+                        const SizedBox(height: 20),
+
+                        Text(
+                          'Lokasi Cerita',
+                          style: blackTextStyle.copyWith(
+                            fontSize: 16,
+                            fontWeight: semiBold,
+                          ),
+                        ),
+
+                        const SizedBox(height: 12),
+
+                        Container(
+                          width: double.infinity,
+                          height: 200,
+
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(14),
+
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.4),
+                                spreadRadius: 1,
+                                blurRadius: 2,
+                                offset: Offset(0, 2),
+                              ),
+                            ],
+
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage('assets/location_plaeholder.jpg'),
+                              colorFilter: ColorFilter.mode(
+                                  Colors.black.withOpacity(0.35),
+                                  BlendMode.multiply
+                              )
+                            ),
+                          ),
+
+                          child: Center(
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 6),
+                              child: Text(
+                                'Cerita ini tanpa lokasi',
+                                style: whiteTextStyle.copyWith(
+                                  fontSize: 18,
+                                  fontWeight: semiBold
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                       ],

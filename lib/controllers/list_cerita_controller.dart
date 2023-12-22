@@ -9,6 +9,9 @@ class ListCeritaController extends GetxController{
   final _listCeritaResponse = Rxn<ListCeritaModel?>();
   ListCeritaModel? get listCeritaResponse => _listCeritaResponse.value;
 
+  final _listCeritaLocationResponse = Rxn<ListCeritaModel?>();
+  ListCeritaModel? get listCeritaLocationResponse => _listCeritaLocationResponse.value;
+
   final _userName = Rxn<String?>();
   String? get userName => _userName.value;
 
@@ -37,6 +40,22 @@ class ListCeritaController extends GetxController{
 
       var getUserName = await AuthService().getUserName();
       _userName.value = getUserName;
+
+    } catch(e) {
+      isLoading(false);
+      rethrow;
+
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  Future<void> fetchListCeritaLocation() async {
+    isLoading(true);
+
+    try{
+      var getListCeritaLocation = await CeritaService().getListCeritaLocation();
+      _listCeritaLocationResponse.value = getListCeritaLocation;
 
     } catch(e) {
       isLoading(false);
