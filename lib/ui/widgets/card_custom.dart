@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../shared/theme.dart';
 import 'button_custom.dart';
@@ -172,7 +173,7 @@ class AllCeritaCardCustom extends StatelessWidget {
                 ),
               ),
 
-              SmallButtonCustom(
+              const SmallButtonCustom(
                   paddingX: 12,
                   paddingY: 6,
                   label: 'See more',
@@ -204,7 +205,7 @@ class LatestCeritaCardCustom extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width * 0.8,
       height: 200,
-      margin: EdgeInsets.only(right: 20),
+      margin: const EdgeInsets.only(right: 20),
 
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
@@ -220,7 +221,7 @@ class LatestCeritaCardCustom extends StatelessWidget {
 
       // Story Information
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -260,7 +261,7 @@ class LatestCeritaCardCustom extends StatelessWidget {
                 const SizedBox(width: 8),
 
                 // User Name
-                Container(
+                SizedBox(
                   width: 180,
                   child: Text(
                     userName,
@@ -278,6 +279,70 @@ class LatestCeritaCardCustom extends StatelessWidget {
           ],
         ),
       )
+    );
+  }
+}
+
+class TipsCardCustom extends StatelessWidget {
+
+  final String tips;
+  final String imgUrl;
+  final String urlWeb;
+
+  const TipsCardCustom({Key? key, required this.tips, required this.imgUrl, required this.urlWeb}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: ()  {
+        launchUrl(Uri.parse(urlWeb));
+      },
+
+      child: Container(
+        width: 155,
+        height: 176,
+
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: whiteColor,
+        ),
+
+        child: Column(
+          children: [
+
+            ClipRRect(
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(20),
+              ),
+              child: Image.asset(
+                imgUrl,
+                width: 155,
+                height: 110,
+                fit: BoxFit.cover,
+              ),
+            ),
+
+
+            const SizedBox(
+              height: 12,
+            ),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 12,
+              ),
+              child: Text(
+                tips,
+                style: blackTextStyle.copyWith(
+                  fontWeight: medium,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                maxLines: 2,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

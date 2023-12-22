@@ -1,5 +1,6 @@
 import 'package:ceritaku/controllers/detail_cerita_controller.dart';
 import 'package:ceritaku/shared/theme.dart';
+import 'package:ceritaku/ui/widgets/mini_map_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -140,11 +141,16 @@ class _StoryDetailPageState extends State<StoryDetailPage> {
                                 ),
 
                                 // User Name
-                                Text(
-                                  detailCerita!.name.toString(),
-                                  style: blackTextStyle.copyWith(
-                                      fontSize: 20,
-                                      fontWeight: semiBold
+                                SizedBox(
+                                  width: 300,
+                                  child: Text(
+                                    detailCerita!.name.toString(),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                    style: blackTextStyle.copyWith(
+                                        fontSize: 20,
+                                        fontWeight: semiBold
+                                    ),
                                   ),
                                 ),
                               ],
@@ -181,6 +187,7 @@ class _StoryDetailPageState extends State<StoryDetailPage> {
 
                         const SizedBox(height: 20),
 
+                        // Lokasi Cerita
                         Text(
                           'Lokasi Cerita',
                           style: blackTextStyle.copyWith(
@@ -191,51 +198,63 @@ class _StoryDetailPageState extends State<StoryDetailPage> {
 
                         const SizedBox(height: 12),
 
-                        Container(
+                        detailCerita.lat != null || detailCerita.lon != null
+                            ?
+                        SizedBox(
                           width: double.infinity,
-                          height: 200,
-
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(14),
-
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.4),
-                                spreadRadius: 1,
-                                blurRadius: 2,
-                                offset: Offset(0, 2),
-                              ),
-                            ],
-
-                            image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: AssetImage('assets/location_plaeholder.jpg'),
-                              colorFilter: ColorFilter.mode(
-                                  Colors.black.withOpacity(0.35),
-                                  BlendMode.multiply
-                              )
-                            ),
+                          height: 250,
+                          child: MiniMap(
+                              lat: detailCerita.lat!.toDouble(),
+                              long: detailCerita.lon!.toDouble(),
+                              id: detailCerita.id.toString(),
+                              name: detailCerita.name.toString()
                           ),
+                        )
+                            :
+                        Container(
+                            width: double.infinity,
+                            height: 200,
 
-                          child: Center(
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 6),
-                              child: Text(
-                                'Cerita ini tanpa lokasi',
-                                style: whiteTextStyle.copyWith(
-                                  fontSize: 18,
-                                  fontWeight: semiBold
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(14),
+
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.4),
+                                  spreadRadius: 1,
+                                  blurRadius: 2,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ],
+
+                              image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: const AssetImage('assets/location_plaeholder.jpg'),
+                                  colorFilter: ColorFilter.mode(
+                                      Colors.black.withOpacity(0.35),
+                                      BlendMode.multiply
+                                  )
+                              ),
+                            ),
+
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 6),
+                                child: Text(
+                                  'Cerita ini tanpa lokasi',
+                                  style: whiteTextStyle.copyWith(
+                                      fontSize: 18,
+                                      fontWeight: semiBold
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
+                            )
                         ),
+
                       ],
                     ),
                   );
-
                 }
-
                 return const Center(child: Text('Something Went Wrong :('));
             })
       ),

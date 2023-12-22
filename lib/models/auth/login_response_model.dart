@@ -14,7 +14,7 @@ class LoginResponseModel {
     error: json['error'],
     message: json['message'],
     loginResult: json['loginResult'] != null
-        ? new LoginResult.fromJson(json['loginResult'])
+        ? LoginResult.fromJson(json['loginResult'])
         : null
   );
 }

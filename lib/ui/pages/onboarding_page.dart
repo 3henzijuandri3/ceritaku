@@ -22,7 +22,7 @@ class OnBoardingPage extends StatelessWidget {
 
           // Black Overlay
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.bottomCenter,
                 end: Alignment.topCenter,
@@ -36,7 +36,7 @@ class OnBoardingPage extends StatelessWidget {
 
           // Text
           Padding(
-            padding: EdgeInsets.only(left: 24, bottom: 60),
+            padding: const EdgeInsets.only(left: 24, bottom: 60),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.start,

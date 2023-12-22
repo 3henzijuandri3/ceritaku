@@ -9,6 +9,7 @@ import 'package:ceritaku/ui/pages/all_story_page.dart';
 import 'package:ceritaku/ui/pages/onboarding_page.dart';
 import 'package:ceritaku/ui/pages/story_detail_page.dart';
 import 'package:ceritaku/ui/pages/story_map_page.dart';
+import 'package:ceritaku/ui/pages/upload_cerita_page.dart';
 import 'package:ceritaku/ui/widgets/button_custom.dart';
 import 'package:ceritaku/ui/widgets/card_custom.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +34,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       body: SafeArea(
         child: GetX(
             init: homeStateController,
@@ -49,7 +51,7 @@ class _HomePageState extends State<HomePage> {
                 final listCerita = listCeritaResponse.listCerita;
 
                 return ListView(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   children: [
 
                     // Name and Profile
@@ -70,12 +72,91 @@ class _HomePageState extends State<HomePage> {
                     // Latest Story
                     latestStory(listCerita!),
 
+                    const SizedBox(height: 30),
+
+                    // Productivity Tips
+                    productiveTips()
                   ],
                 );
               }
 
               return const Center(child: Text('Something Went Wrong :('));
             }),
+      ),
+
+      bottomNavigationBar: BottomAppBar(
+        notchMargin: 6,
+        elevation: 0,
+        color: whiteColor,
+        shape: const CircularNotchedRectangle(),
+        clipBehavior: Clip.antiAlias,
+
+        child: BottomNavigationBar(
+            elevation: 0,
+            type: BottomNavigationBarType.fixed,
+            backgroundColor: whiteColor,
+            selectedItemColor: greenColor,
+            unselectedItemColor: blackColor,
+            showSelectedLabels: true,
+            showUnselectedLabels: true,
+
+            selectedLabelStyle: greenTextStyle.copyWith(
+                fontSize: 11,
+                fontWeight: medium
+            ),
+
+            unselectedLabelStyle: blackTextStyle.copyWith(
+                fontSize: 11,
+                fontWeight: medium
+            ),
+
+            items: const [
+              // Home
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Home',
+              ),
+
+              // Upload Cerita
+              BottomNavigationBarItem(
+                icon: Icon(Icons.cloud_upload_outlined),
+                label: 'Upload Story',
+              ),
+
+              // All Cerita
+              BottomNavigationBarItem(
+                icon: Icon(Icons.list),
+                label: 'All Stories',
+              ),
+
+              // Cerita Map
+              BottomNavigationBarItem(
+                icon: Icon(Icons.map),
+                label: 'Story Map',
+              )
+            ],
+
+            currentIndex: 0,
+            onTap: (index) {
+              switch (index) {
+                case 0:
+                  break;
+
+                case 1:
+                  Get.offAll(const UploadCeritaPage());
+                  break;
+
+                case 2:
+                  Get.offAll(const AllStoryPage());
+                  break;
+
+                case 3:
+                  homeStateController.clearState();
+                  Get.to(() => const StoryMapPage());
+                  break;
+              }
+          }
+        ),
       ),
     );
   }
@@ -168,7 +249,7 @@ class _HomePageState extends State<HomePage> {
                   homeStateController.clearState();
                   Get.to(() => const StoryMapPage());
                 },
-                child: SmallButtonCustom(paddingX: 16, paddingY: 10, label: 'Open Map'),
+                child: const SmallButtonCustom(paddingX: 16, paddingY: 10, label: 'Open Map'),
               )
             ],
           )
@@ -207,7 +288,8 @@ class _HomePageState extends State<HomePage> {
                 icon: Icons.cloud_upload_outlined,
                 label: 'Upload Story',
                 onTap: (){
-
+                  homeStateController.clearState();
+                  Get.to(() => const UploadCeritaPage());
                 }
             ),
 
@@ -257,6 +339,57 @@ class _HomePageState extends State<HomePage> {
             ).take(5).toList(),
           ),
         ),
+      ],
+    );
+  }
+
+  Widget productiveTips(){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+
+        // Cooking Tips
+        Text(
+          'Productivity Tips',
+          style: blackTextStyle.copyWith(
+            fontSize: 16,
+            fontWeight: semiBold,
+          ),
+        ),
+
+        const SizedBox(height: 14),
+
+        const Wrap(
+          spacing: 20,
+          runSpacing: 20,
+
+          children: [
+            TipsCardCustom(
+                tips: '20 Productivity Tips',
+                imgUrl: 'assets/tips1.png',
+                urlWeb: 'https://hive.com/blog/productivity-tips/'
+            ),
+
+            TipsCardCustom(
+                tips: 'Boost Your Productivity',
+                imgUrl: 'assets/tips2.jpg',
+                urlWeb: 'https://www.atlassian.com/blog/productivity/simple-ways-to-be-productive-at-work'
+            ),
+
+            TipsCardCustom(
+                tips: 'Productivity Startegies',
+                imgUrl: 'assets/tips3.png',
+                urlWeb: 'https://jamesclear.com/productivity'
+            ),
+
+            TipsCardCustom(
+                tips: 'Productivity 101',
+                imgUrl: 'assets/tips4.png',
+                urlWeb: 'https://www.betterup.com/blog/what-is-productivity'
+            ),
+          ],
+        ),
+
       ],
     );
   }
@@ -315,9 +448,9 @@ class MoreDialog extends StatelessWidget {
             GestureDetector(
               onTap: (){
                 AuthService().clearLocalStorage();
-                Get.offAll(() => OnBoardingPage());
+                Get.offAll(() => const OnBoardingPage());
               },
-              child: SmallButtonCustom(paddingX: 18, paddingY: 8, label: 'Yes', customFontSize: 16),
+              child: const SmallButtonCustom(paddingX: 18, paddingY: 8, label: 'Yes', customFontSize: 16),
             ),
             
           ],

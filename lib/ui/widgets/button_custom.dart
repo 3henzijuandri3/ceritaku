@@ -104,7 +104,7 @@ class SmallButtonCustom extends StatelessWidget {
       child: Text(
         label,
         style: blackTextStyle.copyWith(
-            fontSize: customFontSize == null ? 14 : customFontSize,
+            fontSize: customFontSize ?? 14,
             fontWeight: semiBold
         ),
       ),

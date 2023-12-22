@@ -1,9 +1,7 @@
-import 'dart:convert';
 
 import 'package:ceritaku/services/auth_service.dart';
 import 'package:ceritaku/ui/pages/home_page.dart';
 import 'package:ceritaku/ui/pages/onboarding_page.dart';
-import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -15,7 +15,7 @@ class CeritaDetailModel {
           error: json['error'],
           message: json['message'],
           detailCerita: json['story'] != null
-              ? new CeritaModel.fromJson(json['story'])
+              ? CeritaModel.fromJson(json['story'])
               : null
       );
 }

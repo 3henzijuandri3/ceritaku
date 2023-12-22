@@ -1,5 +1,4 @@
 import 'package:ceritaku/models/auth/login_form_model.dart';
-import 'package:ceritaku/ui/pages/all_story_page.dart';
 import 'package:ceritaku/ui/pages/home_page.dart';
 import 'package:ceritaku/ui/pages/register_page.dart';
 import 'package:d_info/d_info.dart';
@@ -67,7 +66,6 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: Obx((){
         final isLoading = loginStateController.isLoading.value;
-        final loginResponse = loginStateController.loginResponse;
 
         return Stack(
           children: [
