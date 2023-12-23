@@ -13,6 +13,7 @@ Ceritaku is a social-media-like application. In ceritaku, users are able to uplo
 ## Technology
 - Story API from [Story API Dicoding](https://story-api.dicoding.dev/v1#/)
 - GetX State Management
+- Google Maps API
 
 # App Interface
 * Splash Screen
